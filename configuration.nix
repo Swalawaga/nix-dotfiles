@@ -72,7 +72,6 @@ in
     };
   };
 
-  services.picom.enable = true;
   xdg.portal.enable = true;
   programs.dconf.enable = true;
   nixpkgs.config.allowNonFree = true;
@@ -114,6 +113,8 @@ in
    extraGroups = [ "wheel" "video"]; # Enable ‘sudo’ for the user.
   };
   #Packages are now managed in /home/swalawaga/packages.nix
+  #services.sshd.enable = true; #enables ssh
+  
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
