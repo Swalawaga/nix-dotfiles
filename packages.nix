@@ -1,12 +1,5 @@
 #Hola
 {config, pkgs, ... }:
-#let
-    #home-manager = builtins.fetchTarball  "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-#in
-{
-#imports = [
-  #(import "${home-manager}/nixos")
-#];
 environment.systemPackages = with pkgs; [
   vim 
   wget
@@ -20,7 +13,6 @@ environment.systemPackages = with pkgs; [
   firefox
   dmenu
   rofi
-  wofi
   wirelesstools
   i3status
   networkmanagerapplet
@@ -32,7 +24,6 @@ environment.systemPackages = with pkgs; [
   conky
   lxappearance
   dunst
-  xorg.xbacklight
   zsh
   htop
   picom
@@ -45,6 +36,9 @@ environment.systemPackages = with pkgs; [
   spotify
   scrot
   cava
+  vlc
+  xclip
+  #libsForQt5.kdeconnect-kde
   tor-browser-bundle-bin
 ];
 }
