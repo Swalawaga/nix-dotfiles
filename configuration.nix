@@ -15,7 +15,9 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      #import "${home-manager}/nixos")
       /home/swalawaga/nixos/packages.nix
+      /home/swalawaga/nixos/home.nix
     ];
 
   #Allow unfree packages cause Im not insane
@@ -71,7 +73,9 @@ in
         nvidiaBusId = "PCI:1:0:0";
     };
   };
-
+    
+  #Automatic garbage collection
+  nix.gc.automatic = true;
   xdg.portal.enable = true;
   programs.dconf.enable = true;
   nixpkgs.config.allowNonFree = true;
@@ -87,16 +91,7 @@ in
     libinput.touchpad.clickMethod = "clickfinger";
     libinput.touchpad.horizontalScrolling = false;
     libinput.touchpad.disableWhileTyping = true;
-    # Enable the KDE Desktop Environment.
-    #displayManager.sddm.enable = true;
-    # desktopManager.plasma5.enable = true;
     #desktopManager.xfce.enable = true;
-    #enable gnome
-    #services.xserver.displayManager.gdm.enable = true;
-    #services.xserver.desktopManager.gnome.enable = true;
-    displayManager.lightdm.enable = true;
-    windowManager.i3.enable = true;
-    windowManager.i3.package = pkgs.i3-gaps;
   };
 
 
@@ -112,7 +107,6 @@ in
    shell = pkgs.zsh; #makes zsh the default shell for swalawaga
    extraGroups = [ "wheel" "video"]; # Enable ‘sudo’ for the user.
   };
-  #Packages are now managed in /home/swalawaga/packages.nix
   #services.sshd.enable = true; #enables ssh
   
   programs.mtr.enable = true;
