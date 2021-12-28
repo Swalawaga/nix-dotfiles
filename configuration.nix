@@ -122,11 +122,12 @@ in
   Option         "TripleBuffer" "on"
   '';
   #Supposed to help w/ vnc
-  services.xserver.deviceSection= ''
-  Identifier "intelgpu0"
-  Driver "intel"
-  Option "VirtualHeads" "2"
-  '';
+  #Commenting this out because it makes me unable to start x11
+  #services.xserver.deviceSection= ''
+  #Identifier "intelgpu0"
+  #Driver "intel"
+  #Option "VirtualHeads" "2"
+  #'';
   #services.sshd.enable = true; #enables ssh
   
   programs.mtr.enable = true;
