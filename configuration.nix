@@ -29,7 +29,13 @@ in
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  #Enables flakes
+  nix = {
+  package = pkgs.nixFlakes;
+  extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+  };
   # Set your time zone.
   time.timeZone = "America/New_York";
 
@@ -94,7 +100,9 @@ in
     #desktopManager.xfce.enable = true;
   };
 
-
+  #Enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -107,6 +115,18 @@ in
    shell = pkgs.zsh; #makes zsh the default shell for swalawaga
    extraGroups = [ "wheel" "video"]; # Enable ‘sudo’ for the user.
   };
+  #Supposed to fix screen tearing
+  services.xserver.screenSection = ''
+  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+  Option         "AllowIndirectGLXProtocol" "off"
+  Option         "TripleBuffer" "on"
+  '';
+  #Supposed to help w/ vnc
+  services.xserver.deviceSection= ''
+  Identifier "intelgpu0"
+  Driver "intel"
+  Option "VirtualHeads" "2"
+  '';
   #services.sshd.enable = true; #enables ssh
   
   programs.mtr.enable = true;
