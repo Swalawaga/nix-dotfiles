@@ -97,15 +97,30 @@ in
     libinput.touchpad.clickMethod = "clickfinger";
     libinput.touchpad.horizontalScrolling = false;
     libinput.touchpad.disableWhileTyping = true;
-    #desktopManager.xfce.enable = true;
+    #Supposed to help w/ screen tearing on nvidia w/ external moniters
+    screenSection = ''
+        Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+        Option         "AllowIndirectGLXProtocol" "off"
+        Option         "TripleBuffer" "on"
+    '';
+    #Trying to setup a virtual Display to work with when using vnc 
+    deviceSection = ''
+        #Identifier "Nvidia Card"
+        #Driver "nvidia"
+        Option "VirtualHeads" "3"
+    '';
+    #virtualScreen = { x = 2048; y = 2048; };
+    exportConfiguration = true;
   };
 
+  services.xrdp.enable = true;
+  networking.firewall.allowedTCPPorts = [ 5900 3389 ];
   #Enable bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
+  
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -115,19 +130,6 @@ in
    shell = pkgs.zsh; #makes zsh the default shell for swalawaga
    extraGroups = [ "wheel" "video"]; # Enable ‘sudo’ for the user.
   };
-  #Supposed to fix screen tearing
-  services.xserver.screenSection = ''
-  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-  Option         "AllowIndirectGLXProtocol" "off"
-  Option         "TripleBuffer" "on"
-  '';
-  #Supposed to help w/ vnc
-  #Commenting this out because it makes me unable to start x11
-  #services.xserver.deviceSection= ''
-  #Identifier "intelgpu0"
-  #Driver "intel"
-  #Option "VirtualHeads" "2"
-  #'';
   #services.sshd.enable = true; #enables ssh
   
   programs.mtr.enable = true;
